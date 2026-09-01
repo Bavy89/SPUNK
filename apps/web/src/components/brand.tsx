@@ -3,12 +3,11 @@ import { cn } from '@/lib/utils';
 
 interface BrandProps {
   className?: string;
-  showTagline?: boolean;
 }
 
-export function Brand({ className, showTagline = false }: BrandProps) {
+export function Brand({ className }: BrandProps) {
   return (
-    <span className={cn('flex min-w-0 items-center gap-2.5', className)}>
+    <span className={cn('flex items-center', className)}>
       <Image
         src="/images/logo.png"
         alt="Villekulla"
@@ -17,11 +16,6 @@ export function Brand({ className, showTagline = false }: BrandProps) {
         className="h-8 w-auto shrink-0"
         priority
       />
-      {showTagline ? (
-        <span className="truncate text-xs text-muted-foreground">
-          Barne- og ungdomsteater
-        </span>
-      ) : null}
     </span>
   );
 }

@@ -22,7 +22,7 @@ async function SidebarHeaderContent() {
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" asChild tooltip="Villekulla hjem">
             <Link href="/">
-              <Brand showTagline />
+              <Brand />
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>

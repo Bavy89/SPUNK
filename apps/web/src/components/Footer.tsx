@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
           <div className="max-w-md space-y-3">
             <Link href="/" aria-label="Villekulla hjem" className="inline-flex">
-              <Brand showTagline />
+              <Brand />
             </Link>
             <p className="text-sm leading-6 text-muted-foreground">
               Øvingsplan og rolleoversikt for foreldre og produksjonsledere i Villekulla barne- og ungdomsteater.
