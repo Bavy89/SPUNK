@@ -5,6 +5,7 @@ const config: NextConfig = {
   agentRules: false,
   cacheComponents: true,
   partialPrefetching: true,
+  turbopack: {},
   images: {
     remotePatterns: [
       {
