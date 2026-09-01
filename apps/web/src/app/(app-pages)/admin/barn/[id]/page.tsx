@@ -113,7 +113,7 @@ export default async function BarnProfilPage({
                 </CardHeader>
                 <CardContent className="flex flex-wrap gap-2">
                   {prod.grupper.map((g) => (
-                    <Badge key={g.id} variant="secondary">
+                    <Badge key={g.id} variant="blue">
                       {g.navn}{g.ukedag ? ` (${g.ukedag})` : ''}
                     </Badge>
                   ))}
@@ -135,7 +135,7 @@ export default async function BarnProfilPage({
                         <span className="font-medium">{k.navn}</span>
                         {k.kategori && <span className="ml-2 text-xs text-muted-foreground">{k.kategori}</span>}
                       </div>
-                      <Badge variant={k.slot === 'A' ? 'default' : 'outline'}>
+                      <Badge variant={k.slot === 'A' ? 'pink' : 'green'}>
                         Besetning {k.slot}
                       </Badge>
                     </div>

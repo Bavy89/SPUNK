@@ -92,7 +92,7 @@ export default async function DashboardPage() {
               <div className="flex flex-wrap gap-1 pt-1">
                 {nextEvent.event_groups.map((eg: { group: { id: string; name: string } | null }) =>
                   eg.group ? (
-                    <Badge key={eg.group.id} variant="secondary">
+                    <Badge key={eg.group.id} variant="blue">
                       {eg.group.name}
                     </Badge>
                   ) : null
@@ -165,7 +165,7 @@ export default async function DashboardPage() {
                       {event.location && ` · ${event.location}`}
                     </p>
                   </div>
-                  <Badge variant="outline">{EVENT_TYPE_LABELS[event.type] ?? event.type}</Badge>
+                  <Badge variant="yellow">{EVENT_TYPE_LABELS[event.type] ?? event.type}</Badge>
                 </CardContent>
               </Card>
             ))}

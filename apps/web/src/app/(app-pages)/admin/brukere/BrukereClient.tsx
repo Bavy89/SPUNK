@@ -47,10 +47,10 @@ function UserRow({ profile }: { profile: Profile }) {
   }
 
   const status = profile.is_admin
-    ? { label: 'Admin', variant: 'default' as const, className: 'bg-secondary text-secondary-foreground' }
+    ? { label: 'Admin', variant: 'blue' as const, className: '' }
     : profile.is_approved
-    ? { label: 'Godkjent', variant: 'default' as const, className: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' }
-    : { label: 'Venter', variant: 'outline' as const, className: 'border-amber-400 text-amber-700 dark:text-amber-400' };
+    ? { label: 'Godkjent', variant: 'green' as const, className: '' }
+    : { label: 'Venter', variant: 'yellow' as const, className: '' };
 
   return (
     <TableRow className={!profile.is_approved && !profile.is_admin ? 'bg-amber-50/50 dark:bg-amber-950/20' : undefined}>
@@ -58,7 +58,7 @@ function UserRow({ profile }: { profile: Profile }) {
         {profile.full_name ?? <span className="text-muted-foreground italic">Ukjent</span>}
       </TableCell>
       <TableCell>
-        <Badge variant={status.variant} className={status.className}>
+        <Badge variant={status.variant}>
           {profile.is_admin && <ShieldCheck className="mr-1 size-3" aria-hidden="true" />}
           {status.label}
         </Badge>

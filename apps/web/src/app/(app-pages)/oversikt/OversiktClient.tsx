@@ -20,9 +20,9 @@ const EVENT_TYPE_LABELS: Record<string, string> = {
 };
 
 const EVENT_TYPE_COLORS: Record<string, string> = {
-  rehearsal: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-  performance: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
-  other: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+  rehearsal: 'bg-[#D7DEF8] text-[#1e3270]',
+  performance: 'bg-[#FDD0DE] text-[#7a2040]',
+  other: 'bg-[#FDEABC] text-[#7a5a10]',
 };
 
 function formatTime(iso: string) {
@@ -189,12 +189,12 @@ export function OversiktClient({
                       {(groups.length > 0 || characters.length > 0) && (
                         <div className="flex flex-wrap gap-1 pt-1">
                           {groups.map((g) => (
-                            <Badge key={g.id} variant="secondary" className="text-xs">
+                            <Badge key={g.id} variant="blue" className="text-xs">
                               {g.name}
                             </Badge>
                           ))}
                           {characters.map((c) => (
-                            <Badge key={c.id} variant="outline" className="text-xs">
+                            <Badge key={c.id} variant="green" className="text-xs">
                               {c.name}
                             </Badge>
                           ))}

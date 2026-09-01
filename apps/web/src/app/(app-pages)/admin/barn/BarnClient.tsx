@@ -134,7 +134,7 @@ export function BarnClient({ children }: { children: Child[] }) {
                         <span className="text-muted-foreground">—</span>
                       ) : (
                         groups.map((g) => (
-                          <Badge key={g.id} variant="secondary">{g.name}</Badge>
+                          <Badge key={g.id} variant="blue">{g.name}</Badge>
                         ))
                       )}
                     </div>

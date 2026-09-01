@@ -149,7 +149,7 @@ export function HendelserClient({
                     <p className="font-medium">
                       {event.title ?? EVENT_TYPE_LABELS[event.type] ?? event.type}
                     </p>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="yellow" className="text-xs">
                       {EVENT_TYPE_LABELS[event.type] ?? event.type}
                     </Badge>
                   </div>
