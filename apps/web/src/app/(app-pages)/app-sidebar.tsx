@@ -21,7 +21,7 @@ async function SidebarHeaderContent() {
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" asChild tooltip="Villekulla hjem">
-            <Link href="/">
+            <Link href="/dashboard">
               <Brand />
             </Link>
           </SidebarMenuButton>
