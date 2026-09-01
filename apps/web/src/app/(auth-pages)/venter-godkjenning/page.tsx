@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 
+export const dynamic = 'force-dynamic';
+
 import { Brand } from '@/components/brand';
 import { Button } from '@/components/ui/button';
 import { signOutAction } from '@/data/auth/sign-out';
