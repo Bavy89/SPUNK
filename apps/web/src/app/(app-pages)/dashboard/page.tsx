@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 
 import { getUpcomingEvents } from '@/data/theater/events';
-import { createSupabaseClient } from '@/supabase-clients/server';
+import { getCachedLoggedInVerifiedSupabaseUser } from '@/rsc-data/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -40,21 +40,17 @@ function formatTime(iso: string) {
 export default async function DashboardPage() {
   await connection();
 
-  const supabase = await createSupabaseClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const [{ user }, upcomingEvents] = await Promise.all([
+    getCachedLoggedInVerifiedSupabaseUser(),
+    getUpcomingEvents(3).catch(() => []),
+  ]);
+
   const firstName = (
     user?.user_metadata?.full_name ||
     user?.user_metadata?.name ||
     user?.email?.split('@')[0] ||
     ''
   ).split(' ')[0];
-
-  let upcomingEvents: Awaited<ReturnType<typeof getUpcomingEvents>> = [];
-  try {
-    upcomingEvents = await getUpcomingEvents(3);
-  } catch {
-    // no events yet
-  }
 
   const nextEvent = upcomingEvents[0] ?? null;
 

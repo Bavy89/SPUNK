@@ -29,41 +29,40 @@ export async function getChildProfile(id: string) {
 export async function getChildEvents(id: string, productionId: string) {
   const supabase = await createSupabaseClient();
 
-  // Hent gruppene barnet er med i for denne produksjonen
-  const { data: groupData } = await supabase
-    .from('child_groups')
-    .select('group_id, group:groups!inner(production_id)')
-    .eq('child_id', id)
-    .eq('group.production_id', productionId);
+  // Hent grupper og karakterer parallelt — uavhengige spørringer
+  const [{ data: groupData }, { data: castData }] = await Promise.all([
+    supabase
+      .from('child_groups')
+      .select('group_id, group:groups!inner(production_id)')
+      .eq('child_id', id)
+      .eq('group.production_id', productionId),
+    supabase
+      .from('castings')
+      .select('character_id, character:characters!inner(production_id)')
+      .eq('child_id', id)
+      .eq('character.production_id', productionId),
+  ]);
 
   const groupIds = (groupData ?? []).map((g) => g.group_id);
-
-  // Hent karakterene barnet spiller i denne produksjonen
-  const { data: castData } = await supabase
-    .from('castings')
-    .select('character_id, character:characters!inner(production_id)')
-    .eq('child_id', id)
-    .eq('character.production_id', productionId);
-
   const charIds = (castData ?? []).map((c) => c.character_id);
 
-  // Hent events koblet til barnets grupper
-  const { data: groupEvents } = groupIds.length > 0
-    ? await supabase
-        .from('event_groups')
-        .select('event:events(id, title, type, starts_at, ends_at, location, raw_note, comment)')
-        .in('group_id', groupIds)
-        .eq('event.production_id', productionId)
-    : { data: [] };
-
-  // Hent events koblet til barnets karakterer
-  const { data: charEvents } = charIds.length > 0
-    ? await supabase
-        .from('event_characters')
-        .select('event:events(id, title, type, starts_at, ends_at, location, raw_note, comment)')
-        .in('character_id', charIds)
-        .eq('event.production_id', productionId)
-    : { data: [] };
+  // Hent events for grupper og karakterer parallelt
+  const [{ data: groupEvents }, { data: charEvents }] = await Promise.all([
+    groupIds.length > 0
+      ? supabase
+          .from('event_groups')
+          .select('event:events(id, title, type, starts_at, ends_at, location, raw_note, comment)')
+          .in('group_id', groupIds)
+          .eq('event.production_id', productionId)
+      : Promise.resolve({ data: [] }),
+    charIds.length > 0
+      ? supabase
+          .from('event_characters')
+          .select('event:events(id, title, type, starts_at, ends_at, location, raw_note, comment)')
+          .in('character_id', charIds)
+          .eq('event.production_id', productionId)
+      : Promise.resolve({ data: [] }),
+  ]);
 
   // Slå sammen og dedupliser
   const eventMap = new Map<string, {
