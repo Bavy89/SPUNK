@@ -49,27 +49,37 @@ export const signUpAction = actionClient
 const signInSchema = z.object({
   email: z.string().email(),
   password: z.string(),
+  rememberMe: z.boolean().optional(),
 });
 
-/**
- * Signs in a user with email and password.
- * @param {Object} params - The parameters for sign in.
- * @param {string} params.email - The user's email address.
- * @param {string} params.password - The user's password.
- * @throws {Error} If there's an error during sign in.
- */
 export const signInWithPasswordAction = actionClient
   .schema(signInSchema)
-  .action(async ({ parsedInput: { email, password } }) => {
+  .action(async ({ parsedInput: { email, password, rememberMe } }) => {
     const supabase = await createSupabaseClient();
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       throw new Error(error.message);
+    }
+
+    // Sett cookie-varighet til 30 dager hvis "husk meg" er valgt
+    if (rememberMe && data.session) {
+      const { cookies } = await import('next/headers');
+      const cookieStore = await cookies();
+      const thirtyDays = 60 * 60 * 24 * 30;
+      const existing = cookieStore.getAll();
+      for (const cookie of existing) {
+        if (cookie.name.includes('supabase') || cookie.name.includes('auth')) {
+          cookieStore.set(cookie.name, cookie.value, {
+            maxAge: thirtyDays,
+            path: '/',
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: process.env.NODE_ENV === 'production',
+          });
+        }
+      }
     }
   });
 

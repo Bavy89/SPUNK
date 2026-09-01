@@ -5,6 +5,7 @@ import type { ComponentProps } from 'react';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import {
   InputGroup,
@@ -21,19 +22,20 @@ export const EmailAndPassword = ({
   className,
   ...buttonProps
 }: {
-  onSubmit: (data: { email: string; password: string; full_name?: string }) => void;
+  onSubmit: (data: { email: string; password: string; full_name?: string; rememberMe?: boolean }) => void;
   view: 'sign-in' | 'sign-up';
   isLoading: boolean;
 } & Omit<ComponentProps<typeof Button>, 'children' | 'type'>) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        onSubmit({ email, password, ...(view === 'sign-up' ? { full_name: fullName } : {}) });
+        onSubmit({ email, password, ...(view === 'sign-up' ? { full_name: fullName } : { rememberMe }) });
       }}
       data-testid="password-form"
     >
@@ -105,6 +107,18 @@ export const EmailAndPassword = ({
             </div>
           ) : null}
         </Field>
+        {view === 'sign-in' && (
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="remember-me"
+              checked={rememberMe}
+              onCheckedChange={(v) => setRememberMe(v === true)}
+            />
+            <label htmlFor="remember-me" className="text-sm cursor-pointer select-none">
+              Husk meg i 30 dager
+            </label>
+          </div>
+        )}
         <Button
           {...buttonProps}
           disabled={isLoading || buttonProps.disabled}
