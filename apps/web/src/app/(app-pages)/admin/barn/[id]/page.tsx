@@ -8,9 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 const TYPE_LABEL: Record<string, { label: string; class: string }> = {
-  rehearsal:   { label: 'Øvelse',       class: 'bg-blue-100 text-blue-800' },
-  performance: { label: 'Forestilling', class: 'bg-green-100 text-green-800' },
-  other:       { label: 'Annet',        class: 'bg-gray-100 text-gray-700' },
+  rehearsal:   { label: 'Øvelse',       class: 'bg-[#D7DEF8] text-[#1e3270]' },
+  performance: { label: 'Forestilling', class: 'bg-[#DAEDE2] text-[#1e5c34]' },
+  other:       { label: 'Annet',        class: 'bg-[#FDEABC] text-[#7a5a10]' },
 };
 
 function formatDato(iso: string) {
@@ -107,7 +107,7 @@ export default async function BarnProfilPage({
             {prod.grupper.length > 0 && (
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm flex items-center gap-2">
+                  <CardTitle className="text-sm flex items-center gap-2 text-[#030417]">
                     <Users className="size-4" /> Gruppe / Parti
                   </CardTitle>
                 </CardHeader>
@@ -124,7 +124,7 @@ export default async function BarnProfilPage({
             {prod.karakterer.length > 0 && (
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm flex items-center gap-2">
+                  <CardTitle className="text-sm flex items-center gap-2 text-[#030417]">
                     <Star className="size-4" /> Roller
                   </CardTitle>
                 </CardHeader>
@@ -147,7 +147,7 @@ export default async function BarnProfilPage({
             {kommende.length > 0 && (
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm flex items-center gap-2">
+                  <CardTitle className="text-sm flex items-center gap-2 text-[#030417]">
                     <Calendar className="size-4" /> Kommende øvelser og forestillinger
                   </CardTitle>
                 </CardHeader>
