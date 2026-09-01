@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 
-export const dynamic = 'force-dynamic';
+export const instant = false;
 
 import { Brand } from '@/components/brand';
 import { Button } from '@/components/ui/button';
